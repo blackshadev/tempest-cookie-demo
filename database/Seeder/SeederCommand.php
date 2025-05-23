@@ -18,7 +18,7 @@ final readonly class SeederCommand
     {
     }
 
-    #[ConsoleCommand]
+    #[ConsoleCommand('db:seed')]
     public function seed(): void
     {
         foreach ($this->seeders as $seeder) {

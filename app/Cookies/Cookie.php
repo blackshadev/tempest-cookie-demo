@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Cookies;
 
-use Tempest\Database\IsDatabaseModel;
 use Tempest\Database\Virtual;
 use Tempest\Router\Bindable;
 use Tempest\Validation\Rules\Length;
+use function Tempest\Database\query;
 
 final class Cookie implements Bindable
 {
-    use IsDatabaseModel;
+    public string $id;
 
     #[Length(min: 5, max: 200)]
     public string $title;
@@ -43,7 +43,11 @@ final class Cookie implements Bindable
 
     public static function resolve(string $input): static
     {
-        return self::find(id: $input)->with('cook')->first();
+        return query(self::class)
+            ->select()
+            ->with('cook')
+            ->whereField('id', $input)
+            ->first();
     }
 
 }

@@ -37,11 +37,17 @@ class CookieSeeder implements Seeder
             ]
         ];
         foreach ($cookies as $cookie) {
+            $person = query(Person::class)
+                ->select()
+                ->whereField('name', $cookie['cook'])
+                ->first()
+                ->id;
+
             query(Cookie::class)
                 ->insert([
                     'title' => $cookie['title'],
                     'image' => $cookie['image'],
-                    'cook_id' => Person::find(name: $cookie['cook'])->first()->id,
+                    'cook_id' => $person,
                     'content' => '',
                 ])
                 ->execute();

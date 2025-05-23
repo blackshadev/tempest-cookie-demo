@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeder;
 
 use App\Cookies\Person;
+use function Tempest\Database\query;
 use function Tempest\map;
 
 class PersonSeeder implements Seeder
@@ -23,11 +24,11 @@ class PersonSeeder implements Seeder
         ];
 
         foreach ($names as $name) {
-            map([
-                'name' => $name
-            ])
-                ->to(Person::class)
-                ->save();
+            query(Person::class)
+                ->insert([
+                    'name' => $name
+                ])
+                ->execute();
         }
 
     }

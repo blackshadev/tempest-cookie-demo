@@ -57,10 +57,21 @@ class ReviewSeeder implements Seeder
             ],
         ];
         foreach ($reviews as $review) {
+            $person = query(Person::class)
+                ->select()
+                ->whereField('name', $review['reviewer'])
+                ->first()
+                ->id;
+            $cookie = query(Cookie::class)
+                ->select()
+                ->whereField('title', $review['cookie'])
+                ->first()
+                ->id;
+
             query(Review::class)
                 ->insert([
-                    'reviewer_id' => Person::find(name: $review['reviewer'])->first()->id,
-                    'cookie_id' => Cookie::find(title: $review['cookie'])->first()->id,
+                    'reviewer_id' => $person,
+                    'cookie_id' => $cookie,
                     'score' => $review['score'],
                 ])->execute();
         }
