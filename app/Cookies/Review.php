@@ -8,6 +8,8 @@ use Tempest\Validation\Rules\Between;
 
 final class Review
 {
+    public string $id;
+
     #[Between(min: 1, max: 5)]
     public int $score;
 

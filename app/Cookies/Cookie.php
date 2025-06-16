@@ -25,7 +25,10 @@ final class Cookie implements Bindable
     #[Virtual]
     public int $averageRating {
         get {
-            $reviews = Review::find(cookie_id: $this->id)->all() ?? [];
+            $reviews = query(Review::class)
+                ->select()
+                ->whereField('cookie_id', $this->id)
+                ->all() ?? [];
 
             if (empty($reviews)) {
                 return 0;
